@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* White background */
+    --foreground: 0 0% 0%; /* Black text (pure black) */
+    
+    /* Beige colors for various elements */
+    --card: 36 33% 97%;
+    --card-foreground: 0 0% 0%;
+    --popover: 36 33% 97%;
+    --popover-foreground: 0 0% 0%;
+    
+    --primary: 36 33% 90%; /* Light beige */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 36 33% 80%; /* Medium beige */
+    --secondary-foreground: 0 0% 0%;
+    
+    --muted: 36 33% 95%;
+    --muted-foreground: 0 0% 40%;
+    
+    --accent: 36 33% 85%; /* Darker beige */
+    --accent-foreground: 0 0% 0%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 36 33% 75%;
+    --input: 36 33% 90%;
+    --ring: 36 33% 70%;
+    
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    /* Keep dark mode as is or adjust if needed */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
