@@ -15,8 +15,102 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const SkillsSection = ({ t }) => {
-  const skillCategories = [
+interface Skill {
+  name: string;
+  icon: string;
+}
+
+interface SkillCategory {
+  title: string;
+  skills: Skill[];
+}
+
+interface TranslationsType {
+  intro: {
+    title1: string;
+    title2: string;
+    description: string;
+    downloadCV: string;
+  };
+  skills: {
+    sectionTitle: string;
+    technologies: string;
+    programming: {
+      title: string;
+    };
+    database: {
+      title: string;
+    };
+    bigData: {
+      title: string;
+    };
+    webDev: {
+      title: string;
+    };
+    devOps: {
+      title: string;
+    };
+    dataViz: {
+      title: string;
+    };
+    statistics: {
+      title: string;
+      statAnalysis: string;
+      machineLearning: string;
+      deepLearning: string;
+    };
+  };
+  education: {
+    sectionTitle: string;
+    current: string;
+    engineerCycle: string;
+    polytechLocation: string;
+    bachelorDegree: string;
+    limougeLocation: string;
+    certification: string;
+    ibmCertificate: string;
+    professionalCertification: string;
+  };
+  experience: {
+    sectionTitle: string;
+    job1: {
+      date: string;
+      location: string;
+      title: string;
+      company: string;
+      description: string;
+    };
+    job2: {
+      date: string;
+      location: string;
+      title: string;
+      company: string;
+      tasks: string[];
+    };
+  };
+  projects: {
+    sectionTitle: string;
+    projectList: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
+  allRights: string;
+}
+
+interface Partner {
+  id: string;
+  name: string;
+  description: string;
+  logo?: string;
+}
+
+interface SkillsSectionProps {
+  t: TranslationsType;
+}
+
+const SkillsSection: React.FC<SkillsSectionProps> = ({ t }) => {
+  const skillCategories: SkillCategory[] = [
     {
       title: t.skills.programming.title,
       skills: [
@@ -130,18 +224,18 @@ const SkillsSection = ({ t }) => {
   );
 };
 
-const CVLandingPage = () => {
-  const [language, setLanguage] = useState('fr');
-  const [t, setT] = useState(translations.fr);
-  const [selectedPartner, setSelectedPartner] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+const CVLandingPage: React.FC = () => {
+  const [language, setLanguage] = useState<'fr' | 'en'>('fr');
+  const [t, setT] = useState<TranslationsType>(translations.fr as TranslationsType);
+  const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
     // Load saved language preference if available
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage === 'fr' || savedLanguage === 'en') {
-      setLanguage(savedLanguage);
-      setT(translations[savedLanguage]);
+      setLanguage(savedLanguage as 'fr' | 'en');
+      setT(translations[savedLanguage] as TranslationsType);
     }
     
     const handleResize = () => {
@@ -153,9 +247,9 @@ const CVLandingPage = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLanguageChange = (newLanguage) => {
+  const handleLanguageChange = (newLanguage: 'fr' | 'en') => {
     setLanguage(newLanguage);
-    setT(translations[newLanguage]);
+    setT(translations[newLanguage] as TranslationsType);
     localStorage.setItem('language', newLanguage);
   };
   

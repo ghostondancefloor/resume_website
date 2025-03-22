@@ -5,13 +5,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const ContactDialog = ({ t }: { t: any }) => {
+// Définition d'une interface pour les traductions
+interface TranslationType {
+  contact: string;
+  [key: string]: string;
+}
+
+const ContactDialog = ({ t }: { t: TranslationType | undefined }) => {
   const contactLabel = t?.contact || "Contact";
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -191,12 +191,24 @@ interface RequestBody {
   isInitialMessage?: boolean;
 }
 
+// Définition d'une interface pour les résultats de recherche
+interface SearchResult {
+  title: string;
+  url: string;
+  content: string;
+  score?: number;
+}
+
+interface SearchResults {
+  results: SearchResult[];
+}
+
 interface ChatResponse {
   message: string;
   hasEnoughContext: boolean;
   suggestedQuestions: string[];
   confidence: number;
-  searchResults?: any;
+  searchResults?: SearchResults; // Type spécifique au lieu de any
   success: boolean;
 }
 
@@ -341,9 +353,9 @@ export async function POST(req: Request) {
     const searchQuery = `${resumeData[language].name} ${message} ${resumeData[language].title} data science machine learning`;
     
     // Search for relevant information about your background or technologies mentioned
-    let searchResults;
+    let searchResults: SearchResults;
     try {
-      searchResults = await searchTool.invoke(searchQuery);
+      searchResults = await searchTool.invoke(searchQuery) as SearchResults;
     } catch (searchError) {
       console.error('Search API Error:', searchError);
       searchResults = { results: [] }; // Provide empty results if search fails
@@ -373,7 +385,7 @@ export async function POST(req: Request) {
       if (jsonMatch && jsonMatch.length > 0) {
         try {
           parsedResponse = JSON.parse(jsonMatch[0]);
-        } catch (e) {
+        } catch (_) {
           throw new Error('Invalid response format from LLM');
         }
       } else {
