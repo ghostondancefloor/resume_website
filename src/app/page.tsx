@@ -73,7 +73,7 @@ interface TranslationsType {
       location: string;
       title: string;
       company: string;
-      description: string;
+      tasks: string[];
     };
     job2: {
       date: string;
@@ -404,7 +404,11 @@ const CVLandingPage: React.FC = () => {
                   <div className="md:w-2/3 md:pl-8">
                     <h4 className="font-semibold text-black text-lg">{t.experience.job1.title}</h4>
                     <p className="text-stone-800 font-medium">{t.experience.job1.company}</p>
-                    <p className="text-stone-600 mt-2">{t.experience.job1.description}</p>
+                    <ul className="text-stone-600 mt-2 list-disc pl-5">
+                      {t.experience.job1.tasks.map((task, index) => (
+                        <li key={index}>{task}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row">
