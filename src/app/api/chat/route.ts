@@ -8,7 +8,7 @@ export const resumeData = {
   en: {
     name: "Ikram Iddouch",
     title: "Data Science Engineer",
-    summary: "Data science engineering student passionate about AI and data management. Seeking a four-month maximum and six-week minimum internship from May 19, 2025. Interested in data analysis and solving complex problems with rigor, curiosity, and an ability to translate data into concrete solutions.",
+    summary: "Data science engineering student passionate about AI and data management. Seeking a four-month maximum and six-week minimum internship from May 20, 2025. Interested in data analysis and solving complex problems with rigor, curiosity, and an ability to translate data into concrete solutions.",
     
     education: [
       {
@@ -96,7 +96,7 @@ export const resumeData = {
   fr: {
     name: "Ikram Iddouch",
     title: "Ingénieur en Science des Données",
-    summary: "Étudiante en ingénierie des sciences de données passionnée par l'IA et la gestion des données. À la recherche d'un stage de quatre mois maximum et six semaines minimum à partir du 19 mai 2025. Intéressée par l'analyse de données et la résolution de problèmes complexes avec rigueur, curiosité et une capacité à traduire les données en solutions concrètes.",
+    summary: "Étudiante en ingénierie des sciences de données passionnée par l'IA et la gestion des données. À la recherche d'un stage de quatre mois maximum et six semaines minimum à partir du 20 mai 2025. Intéressée par l'analyse de données et la résolution de problèmes complexes avec rigueur, curiosité et une capacité à traduire les données en solutions concrètes.",
     
     education: [
       {
@@ -303,12 +303,12 @@ const getSystemPrompt = (lang: language, isInitialMessage: boolean = false): str
     return `Tu es un chatbot intelligent pour le portfolio en ligne de ${resumeData.fr.name}, conçu pour aider les recruteurs et les visiteurs à découvrir son profil professionnel.
     
     ${isInitialMessage 
-      ? "Commence par un message d'accueil chaleureux et professionnel. Présente-toi comme un assistant IA sur le site de " + resumeData.fr.name + " et propose des questions pertinentes pour démarrer la conversation. Mentionne qu'elle est à la recherche d'un stage de 6 semaines à 4 mois à partir du 19 mai 2025." 
+      ? "Commence par un message d'accueil chaleureux et professionnel. Présente-toi comme un assistant IA sur le site de " + resumeData.fr.name + " et propose des questions pertinentes pour démarrer la conversation. Mentionne qu'elle est à la recherche d'un stage de 6 semaines à 4 mois à partir du 20 mai 2025." 
       : "Analyse la question et fournis une réponse utile et pertinente sur le parcours professionnel, les compétences ou les projets de " + resumeData.fr.name + ". Sois enthousiaste et représente bien ses qualités, tout en restant précis et professionnel."}
     
     Quand on te demande des informations sur ses compétences techniques ou projets, fournit des détails précis et souligne ses forces en data science et IA.
     
-    Si un recruteur pose des questions sur sa disponibilité ou ses intérêts professionnels, mentionne qu'elle recherche un stage de 6 semaines à 4 mois à partir du 19 mai 2025 dans le domaine de la data science/IA.
+    Si un recruteur pose des questions sur sa disponibilité ou ses intérêts professionnels, mentionne qu'elle recherche un stage de 6 semaines à 4 mois à partir du 20 mai 2025 dans le domaine de la data science/IA.
     
     Retourne TOUJOURS une réponse au format JSON strict avec:
     {
@@ -325,12 +325,12 @@ const getSystemPrompt = (lang: language, isInitialMessage: boolean = false): str
   return `You are an intelligent chatbot for ${resumeData.en.name}'s online portfolio, designed to help recruiters and visitors discover her professional profile.
   
   ${isInitialMessage 
-    ? "Start with a warm and professional welcome message. Introduce yourself as an AI assistant on " + resumeData.en.name + "'s website and suggest relevant questions to start the conversation. Mention that she is looking for an internship of 6 weeks to 4 months starting May 19, 2025." 
+    ? "Start with a warm and professional welcome message. Introduce yourself as an AI assistant on " + resumeData.en.name + "'s website and suggest relevant questions to start the conversation. Mention that she is looking for an internship of 6 weeks to 4 months starting May 20, 2025." 
     : "Analyze the question and provide helpful and relevant information about " + resumeData.en.name + "'s professional background, skills, or projects. Be enthusiastic and represent her qualities well, while remaining accurate and professional."}
   
   When asked about her technical skills or projects, provide specific details and highlight her strengths in data science and AI.
   
-  If a recruiter asks about her availability or professional interests, mention that she is looking for an internship of 6 weeks to 4 months starting May 19, 2025, in the field of data science/AI.
+  If a recruiter asks about her availability or professional interests, mention that she is looking for an internship of 6 weeks to 4 months starting May 20, 2025, in the field of data science/AI.
   
   ALWAYS return a strict JSON response with:
   {

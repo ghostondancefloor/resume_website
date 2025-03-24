@@ -6,68 +6,21 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-// Définition des types
-interface LocalizedText {
-  en?: string;
-  fr?: string;
-  [key: string]: string | undefined;
-}
-
-interface RelevantLink {
-  url: string;
-  title: string | LocalizedText;
-  type?: string | LocalizedText;
-}
-
-interface ExpertiseItem {
-  name: string | LocalizedText;
-  description?: string | LocalizedText;
-}
-
-interface Partner {
-  name: string | LocalizedText;
-  type?: string | LocalizedText;
-  website?: string;
-  description?: string | LocalizedText;
-  expertise?: Array<string | LocalizedText>;
-}
-
-interface Member {
-  name: string | LocalizedText;
-  type?: string | LocalizedText;
-  website?: string;
-  description?: string | LocalizedText;
-  expertise?: Array<string | LocalizedText>;
-}
-
-interface Message {
-  text: string | LocalizedText;
-  confidence?: number;
-  relatedPartners?: Partner[];
-  relatedMembers?: Member[];
-  relevantLinks?: RelevantLink[];
-}
-
-interface EnhancedMessageProps {
-  message: Message;
-  language?: string;
-}
-
 // Helper function to handle multilingual text
-const getLocalizedText = (text: string | LocalizedText | undefined, language: string): string => {
+const getLocalizedText = (text: any, language: string) => {
   if (typeof text === 'string') return text;
   if (text && typeof text === 'object' && (text.fr || text.en)) {
-    return text[language] || text.en || text.fr || ''; // Fallback chain
+    return text[language] || text.en || text.fr; // Fallback chain
   }
   return '';
 };
 
-const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = 'en' }) => {
+const EnhancedMessage = ({ message, language = 'en' }: any) => {
   const [isMetadataOpen, setIsMetadataOpen] = useState(false);
   
-  const hasAdditionalInfo = (message.relatedPartners?.length || 0) > 0 || 
-                           (message.relatedMembers?.length || 0) > 0 || 
-                           (message.relevantLinks?.length || 0) > 0;
+  const hasAdditionalInfo = message.relatedPartners?.length > 0 || 
+                           message.relatedMembers?.length > 0 || 
+                           message.relevantLinks?.length > 0;
 
   if (!hasAdditionalInfo) {
     return <div className="break-words">{getLocalizedText(message.text, language)}</div>;
@@ -109,7 +62,7 @@ const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = '
                 {language === 'fr' ? 'Partenaires associés' : 'Related Partners'}
               </h4>
               <div className="grid grid-cols-1 gap-2">
-                {message.relatedPartners.map((partner: Partner, index: number) => (
+                {message.relatedPartners.map((partner: any, index: number) => (
                   <div 
                     key={index}
                     className="p-3 rounded-lg bg-blue-900/30 border border-blue-500/20 space-y-2"
@@ -143,7 +96,7 @@ const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = '
                     )}
                     {partner.expertise && (
                       <div className="flex flex-wrap gap-1">
-                        {partner.expertise.map((exp, i: number) => (
+                        {partner.expertise.map((exp: any, i: number) => (
                           <span
                             key={i}
                             className="text-xs px-2 py-1 rounded-full bg-blue-800/40 text-blue-200 border border-blue-500/20"
@@ -165,7 +118,7 @@ const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = '
                 {language === 'fr' ? 'Membres associés' : 'Related Members'}
               </h4>
               <div className="grid grid-cols-1 gap-2">
-                {message.relatedMembers.map((member: Member, index: number) => (
+                {message.relatedMembers.map((member: any, index: number) => (
                   <div 
                     key={index}
                     className="p-3 rounded-lg bg-blue-900/30 border border-blue-500/20 space-y-2"
@@ -199,7 +152,7 @@ const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = '
                     )}
                     {member.expertise && (
                       <div className="flex flex-wrap gap-1">
-                        {member.expertise.map((exp, i: number) => (
+                        {member.expertise.map((exp: any, i: number) => (
                           <span
                             key={i}
                             className="text-xs px-2 py-1 rounded-full bg-blue-800/40 text-blue-200 border border-blue-500/20"
@@ -221,7 +174,7 @@ const EnhancedMessage: React.FC<EnhancedMessageProps> = ({ message, language = '
                 {language === 'fr' ? 'Liens pertinents' : 'Relevant Links'}
               </h4>
               <div className="space-y-2">
-                {message.relevantLinks.map((link: RelevantLink, index: number) => (
+                {message.relevantLinks.map((link: any, index: number) => (
                   <a
                     key={index}
                     href={link.url}

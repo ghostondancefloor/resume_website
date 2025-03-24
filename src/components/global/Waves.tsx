@@ -138,7 +138,7 @@ interface MouseObject {
 }
 
 export default function Waves({
-    lineColor = "black",
+    lineColor = "#D2B48C",
     backgroundColor = "transparent",
     waveSpeedX = 0.0125,   // per-frame horizontal speed factor
     waveSpeedY = 0.005,    // per-frame vertical speed factor

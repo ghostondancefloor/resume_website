@@ -7,13 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 import Header from '@/components/global/Header';
 import { translations } from '@/lib/types';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
+
 
 interface Skill {
   name: string;
@@ -134,8 +129,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ t }) => {
       skills: [
         { name: "Apache Spark", icon: "/icons/apache_spark.png" },
         { name: "Hadoop", icon: "/icons/hadoop.png" },
-        { name: "Azure", icon: "/icons/azure.png" },
-        { name: "Snowflake", icon: "/icons/snowflake.png" }
+        { name: "Azure", icon: "/icons/azure.png" }
       ]
     },
     {
@@ -231,27 +225,36 @@ const CVLandingPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    // Load saved language preference if available
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage === 'fr' || savedLanguage === 'en') {
-      setLanguage(savedLanguage as 'fr' | 'en');
-      setT(translations[savedLanguage] as TranslationsType);
+    // Check if code is running in browser environment before accessing localStorage
+    if (typeof window !== 'undefined') {
+      // Load saved language preference if available
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage === 'fr' || savedLanguage === 'en') {
+        setLanguage(savedLanguage as 'fr' | 'en');
+        setT(translations[savedLanguage] as TranslationsType);
+      }
     }
     
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+  
+    if (typeof window !== 'undefined') {
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   const handleLanguageChange = (newLanguage: 'fr' | 'en') => {
     setLanguage(newLanguage);
     setT(translations[newLanguage] as TranslationsType);
-    localStorage.setItem('language', newLanguage);
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', newLanguage);
+    }
   };
+  
   
   const router = useRouter();
   const handleRouteMessage = () => {

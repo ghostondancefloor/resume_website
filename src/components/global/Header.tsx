@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -12,49 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { translations } from '@/lib/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import ContactDialog from './ContactDialog';
 import { Menu, X } from 'lucide-react';
 
 const Header = ({ language, handleLanguageChange }: any) => {
   const router = useRouter();
   const t = (translations as any)[language];
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      console.log("Submitting contact form:", formData);
-
-      const res = await fetch("api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      console.log("API Response:", data);
-
-      if (res.ok) {
-        alert("Message sent successfully!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        console.error("Error from API:", data);
-        alert(`Failed to send message: ${data.error}`);
-      }
-    } catch (error) {
-      console.error("Network Error:", error);
-      alert("An error occurred. Please try again later.");
-    }
-  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -138,10 +102,13 @@ const Header = ({ language, handleLanguageChange }: any) => {
               <ContactDialog t={t} />
             </div>
             <div className="w-full px-4 pt-2">
-              <Select value={language} onValueChange={(val) => {
-                handleLanguageChange(val);
-                setMobileMenuOpen(false);
-              }}>
+              <Select
+                value={language}
+                onValueChange={(val) => {
+                  handleLanguageChange(val);
+                  setMobileMenuOpen(false);
+                }}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Language" />
                 </SelectTrigger>

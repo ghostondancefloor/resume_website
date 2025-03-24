@@ -10,21 +10,29 @@ interface TextWrapperProps {
   language?: 'fr' | 'en';
 }
 
-const TextWrapper: React.FC<TextWrapperProps> = ({ children}) => {
+const TextWrapper: React.FC<TextWrapperProps> = ({ children }) => {
   const [selectedText, setSelectedText] = useState('');
   const [explanation, setExplanation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const language = localStorage.getItem('language') as 'fr' | 'en' || 'fr';
+  const [language, setLanguage] = useState<'fr' | 'en'>('fr');
 
   useEffect(() => {
+    // Only run on the client
+    if (typeof window !== 'undefined') {
+      const storedLang = localStorage.getItem('language');
+      if (storedLang === 'fr' || storedLang === 'en') {
+        setLanguage(storedLang);
+      }
+    }
+
     const handleSelection = () => {
       const selection = window.getSelection();
       if (selection && selection.toString().trim()) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-        
+
         setSelectedText(selection.toString().trim());
         setPosition({
           x: rect.x + rect.width / 2,
@@ -42,7 +50,7 @@ const TextWrapper: React.FC<TextWrapperProps> = ({ children}) => {
 
   const handleExplain = async () => {
     if (!selectedText) return;
-    
+
     setIsLoading(true);
     try {
       const response = await fetch('/api/explain', {
@@ -55,12 +63,12 @@ const TextWrapper: React.FC<TextWrapperProps> = ({ children}) => {
           language
         }),
       });
-      
+
       const data = await response.json();
       setExplanation(data.explanation);
     } catch (error) {
       console.error('Failed to get explanation:', error);
-      setExplanation(language === 'fr' 
+      setExplanation(language === 'fr'
         ? "Désolé, une erreur s'est produite."
         : "Sorry, an error occurred.");
     } finally {
@@ -71,7 +79,7 @@ const TextWrapper: React.FC<TextWrapperProps> = ({ children}) => {
   return (
     <div className="relative">
       {children}
-      
+
       {isVisible && (
         <div
           className="fixed z-50"
@@ -98,8 +106,8 @@ const TextWrapper: React.FC<TextWrapperProps> = ({ children}) => {
                   className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                   disabled={isLoading}
                 >
-                  {isLoading 
-                    ? (language === 'fr' ? 'Chargement...' : 'Loading...') 
+                  {isLoading
+                    ? (language === 'fr' ? 'Chargement...' : 'Loading...')
                     : (language === 'fr' ? 'Obtenir une explication' : 'Get explanation')}
                 </Button>
               ) : (
